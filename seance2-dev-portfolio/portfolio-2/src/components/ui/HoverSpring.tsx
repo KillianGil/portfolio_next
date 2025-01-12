@@ -59,10 +59,10 @@ const HoverSpring = () => {
               className="mb-3 rounded-lg"
               alt={competences.name}
             />
-            <div className="mb-1 text-lg font-medium text-gray-900 dark:text-gray-100">
+            <div className="mb-1 text-lg font-medium text-gray-100 dark:text-gray-100">
               {competences.name}
             </div>
-            <div className="max-w-[250px] text-sm font-normal text-gray-500 dark:text-gray-400">
+            <div className="max-w-[250px] text-sm font-normal text-gray-400 dark:text-gray-400">
               {competences.description}
             </div>
           </motion.div>
