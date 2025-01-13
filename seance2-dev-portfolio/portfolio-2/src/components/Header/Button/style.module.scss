@@ -7,10 +7,10 @@
     cursor: pointer;
     border-radius: 25px;
     overflow: hidden;
-    border: 2px solid white; /* Bordure par défaut */
+    border: 2px solid white; 
   
     &.noBorder {
-      border: none; /* Supprime la bordure quand le menu est actif */
+      border: none; 
     }
   
     .slider {

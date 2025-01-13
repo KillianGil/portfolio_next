@@ -25,16 +25,15 @@ interface Picture {
 export default function ZoomImage(): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null);
 
-  // Progrès de défilement
+
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start start", "end start"], // Le zoom se termine avant le défilement.
+    offset: ["start start", "end start"], 
   });
 
-  // Transformer les échelles
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 4]); // Zoom sur la moitié de la hauteur
 
-  // Limiter le défilement tant que l'image n'est pas complètement zoomée
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 4]); 
+
   const { data, loading, error } = useQuery(GET_IMAGES);
 
   if (loading) return <p>Chargement des images...</p>;

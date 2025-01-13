@@ -50,7 +50,7 @@ const List = ({ item, className, index, activeItem, ...props }: ImageProps) => (
         <WaveReveal
           duration="100ms"
           className="items-start justify-start text-xl sm:text-2xl md:text-5xl"
-          text={item.title.replace(/ /g, "\u00A0")} // Assure que les espaces sont respectés
+          text={item.title.replace(/ /g, "\u00A0")}
           direction="up"
           extraDelay={2000}
         />
@@ -94,7 +94,7 @@ export default function Expandable({ autoPlay = true, className }: ExpandablePro
   return (
     <div
       className={cn(
-        "flex h-96 max-w-screen-lg mx-auto gap-1", // Limite la largeur et centre le composant
+        "flex h-96 max-w-screen-lg mx-auto gap-1", 
         className
       )}
     >

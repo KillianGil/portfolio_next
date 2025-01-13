@@ -28,20 +28,18 @@ export default function BoldCopy({
         className
       )}
     >
-      {/* Texte d'arrière-plan avec opacité réduite */}
       <div
         className={cn(
-          "text-4xl font-bold uppercase text-white/20 transition-all group-hover:opacity-50 md:text-8xl",
+          "text-6xl font-bold uppercase text-white/20 transition-all group-hover:opacity-50 md:text-8xl",
           backgroundTextClassName
         )}
       >
         {text}
       </div>
 
-      {/* Texte principal au premier plan */}
       <div
         className={cn(
-          "text-md absolute font-bold uppercase text-white transition-all group-hover:text-4xl md:text-3xl group-hover:md:text-8xl",
+          "text-md absolute font-bold uppercase text-white transition-all group-hover:text-4xl md:text-5xl group-hover:md:text-8xl",
           textClassName
         )}
       >

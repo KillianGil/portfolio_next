@@ -15,7 +15,7 @@ interface ShowImageListItemProps {
 }
 
 function RevealImageListItem({ text, images, url }: ShowImageListItemProps) {
-  const container = "absolute right-8 -top-1 z-40 h-20 w-16";
+  const container = "absolute top-1/2 right-8 -translate-y-1/2 z-40 h-20 w-16";
   const effect =
     "relative duration-500 delay-100 shadow-none group-hover:shadow-xl scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 group-hover:w-full group-hover:h-full w-16 h-16 overflow-hidden transition-all rounded-md";
 
@@ -24,9 +24,9 @@ function RevealImageListItem({ text, images, url }: ShowImageListItemProps) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative h-fit w-fit overflow-visible py-6"
+      className="group relative flex items-center w-fit overflow-visible py-6"
     >
-      <h1 className="text-6xl font-black text-foreground transition-all duration-500 group-hover:opacity-40">
+      <h1 className="text-5xl font-black text-foreground transition-all duration-500 group-hover:opacity-40">
         {text}
       </h1>
       <div className={container}>
@@ -79,14 +79,12 @@ export default function RevealImageList() {
   }));
 
   return (
-    <div className="flex flex-col items-start gap-2 rounded-sm bg-background px-8 py-4">
+    <div className="flex flex-col items-start gap-8 rounded-sm bg-background px-8 py-4">
       {items.map((item: ShowImageListItemProps, index: number) => (
-        <RevealImageListItem
-          key={index}
-          text={item.text}
-          images={item.images}
-          url={item.url}
-        />
+        <div key={index} className="group w-full">
+          <RevealImageListItem text={item.text} images={item.images} url={item.url} />
+          <hr className="my-4 border-t-2 border-white" />
+        </div>
       ))}
     </div>
   );

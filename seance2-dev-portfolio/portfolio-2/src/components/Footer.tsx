@@ -5,7 +5,7 @@ interface NavigationItem {
   name: string;
   href: string;
   icon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
-  iconSrc?: string; // Ajout d'une source d'icône pour les cas où on utilise next/image
+  iconSrc?: string; 
 }
 
 const navigation: {

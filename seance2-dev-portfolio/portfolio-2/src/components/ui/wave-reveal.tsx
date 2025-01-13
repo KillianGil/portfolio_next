@@ -10,7 +10,7 @@ interface WaveRevealProps {
   blur?: boolean;
   letterClassName?: string;
   delay?: number;
-  extraDelay?: number; // Temps que le texte reste visible avant de disparaître
+  extraDelay?: number;
 }
 
 interface ReducedValue {
@@ -27,7 +27,7 @@ interface ReducedValue {
 }
 
 const createDelay = ({ index, offset, delay }: { index: number; offset: number; delay: number }) =>
-  `${delay + (index + offset) * 30}ms`; // Plus rapide, 30ms par lettre
+  `${delay + (index + offset) * 30}ms`; 
 
 const Word = ({
   word,
@@ -119,22 +119,22 @@ export default function WaveReveal({
   direction = "down",
   mode = "letter",
   className,
-  duration = "700ms", // Apparition rapide
+  duration = "700ms",
   delay = 0,
-  blur = false, // Désactiver le flou
+  blur = false,
   letterClassName,
-  extraDelay = 2000, // Garde le texte visible plus longtemps
+  extraDelay = 2000, 
 }: WaveRevealProps) {
   if (!text) {
     return null;
   }
 
-  const words = text.split(" "); // Séparer les mots par espaces
+  const words = text.split(" ");
 
   const { nodes } = words.reduce<ReducedValue>(createAnimatedNodes, {
     nodes: [],
     offset: 0,
-    duration: parseInt(duration) + extraDelay + "ms", // Inclut le délai supplémentaire
+    duration: parseInt(duration) + extraDelay + "ms", 
     delay,
     className: letterClassName,
     blur,

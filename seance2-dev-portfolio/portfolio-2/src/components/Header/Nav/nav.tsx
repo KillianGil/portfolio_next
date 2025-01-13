@@ -8,7 +8,6 @@ interface Link {
 }
 
 export default function Index(): JSX.Element {
-  // Les liens principaux
   const links: Link[] = [
     { title: "Accueil", href: "/" },
     { title: "Projets", href: "/projets" },
@@ -17,7 +16,6 @@ export default function Index(): JSX.Element {
     { title: "Contact", href: "/contact" },
   ];
 
-  // Les liens de pied de page
   const footerLinks: Link[] = [
     { title: "LinkedIn", href: "/https://www.linkedin.com/in/killian-gil-169b45183/" },
     { title: "Instagram", href: "/" },

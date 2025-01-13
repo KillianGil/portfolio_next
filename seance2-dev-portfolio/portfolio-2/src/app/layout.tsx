@@ -31,20 +31,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientProvider> {/* Encapsulation du contexte Apollo */}
+        <ClientProvider> 
         <header className="fixed  left-0 w-full z-50 flex items-center  px-6 h-20 bg-[#020202]">
-  {/* LOGO */}
+  
   <div className="text-2xl font-bold flex items-center ">
-    <a href="/">
+    <a href="/" className="mt-6 ml-10">
       <img
         src="/logo.png"
         alt="Logo"
-        className="h-24 w-auto" // Taille ajustée
+        className="h-16 w-auto " 
       />
     </a>
   </div>
 
-  {/* MENU */}
   <div className="flex items-center h-full">
     <HeaderMenu />
   </div>

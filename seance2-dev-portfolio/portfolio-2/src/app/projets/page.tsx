@@ -1,14 +1,16 @@
 import React from "react";
 import ZoomImage from "@/components/ui/ZoomImage";
-import CardsParallax from "@/components/ui/cards-parallax";
+import { TabsDemo } from "@/components/ui/tabs-projet";
 
 const ProjectsPage = (): JSX.Element => {
   return (
-    <div className="bg-[#020202] text-white min-h-screen">
+    <div className="bg-[#020202] text-white">
       <div>
         <ZoomImage />
       </div>
-      <CardsParallax />
+      <div className="mt-16">
+        <TabsDemo />
+      </div>
     </div>
   );
 };

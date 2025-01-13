@@ -18,14 +18,14 @@ export default function Button({ isActive, toggleMenu }: ButtonProps): JSX.Eleme
     if (isActive) {
       setHideBorder(true);
     } else {
-      const timer = setTimeout(() => setHideBorder(false), 500); // Garde la bordure supprimée pendant l'animation
-      return () => clearTimeout(timer); // Nettoyage du timer pour éviter des conflits
+      const timer = setTimeout(() => setHideBorder(false), 500); 
+      return () => clearTimeout(timer); 
     }
   }, [isActive]);
 
   return (
     <div
-      className={`${styles.button} ${hideBorder ? styles.noBorder : ""}`} // Applique la classe conditionnelle
+      className={`${styles.button} ${hideBorder ? styles.noBorder : ""}`}
     >
       <motion.div
         className={styles.slider}
