@@ -1,6 +1,7 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
+import WhirlpoolLoader from "./whirlpool-Loader";
 import { cn } from "@/lib/utils";
 
 interface ImageSource {
@@ -66,7 +67,9 @@ const GET_CONTACT_DATA = gql`
 export default function RevealImageList() {
   const { data, loading, error } = useQuery(GET_CONTACT_DATA);
 
-  if (loading) return <p>Chargement...</p>;
+  if (loading) {
+    return <WhirlpoolLoader />;
+  }
   if (error) return <p>Erreur : {error.message}</p>;
 
   const items = data.contacts.map((contact: any) => ({

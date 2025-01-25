@@ -22,7 +22,7 @@ const WhirlpoolLoader = () => {
   }, []);
 
   return (
-    <div className="flex h-60 w-60 items-center justify-center">
+    <div className="flex h-screen w-screen items-center justify-center bg-black">
       <svg width="100%" height="100%" viewBox="-100 -100 200 200">
         <motion.g
           animate={{ rotate: 360 }}
@@ -34,7 +34,7 @@ const WhirlpoolLoader = () => {
               cx={circle.x}
               cy={circle.y}
               r={circle.r}
-              fill="#fb3a5d"
+              fill="white" 
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{

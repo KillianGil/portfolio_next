@@ -1,10 +1,11 @@
 "use client";
 
-import styles from "@/app/zoom.module.scss";
+import styles from "@/style/zoom.module.scss";
 import Image from "next/image";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 import { gql, useQuery } from "@apollo/client";
+import WhirlpoolLoader from "./whirlpool-Loader";
 
 const GET_IMAGES = gql`
   query GetImages {
@@ -36,7 +37,9 @@ export default function ZoomImage(): JSX.Element {
 
   const { data, loading, error } = useQuery(GET_IMAGES);
 
-  if (loading) return <p>Chargement des images...</p>;
+  if (loading) {
+    return <WhirlpoolLoader />;
+  }
   if (error) {
     console.error("Erreur lors de la récupération des images :", error);
     return <p>Erreur : {error.message}</p>;

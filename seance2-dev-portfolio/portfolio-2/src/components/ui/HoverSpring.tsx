@@ -1,46 +1,32 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { gql, useQuery } from '@apollo/client';
 import Image from 'next/image';
 
-const Competences = [
-  {
-    id: 1,
-    name: 'Design UI/UX',
-    description: 'Création d’interfaces utilisateurs ergonomiques et esthétiques pour une expérience optimale.',
-    image: '/icon-ux-ui.png',
-  },
-  {
-    id: 2,
-    name: 'WebDesign',
-    description: 'Conception de sites web modernes et attractifs, adaptés aux besoins des utilisateurs.',
-    image: '/icon-webdesign.png',
-  },
-  {
-    id: 3,
-    name: 'Développement',
-    description: 'Développement web et mobile avec des technologies modernes pour des projets performants.',
-    image: '/icon-informatique.png',
-  },
-  {
-    id: 4,
-    name: 'Design Graphique',
-    description: 'Création de supports visuels uniques et impactants pour une communication efficace.',
-    image: '/icon-design-graphique.png',
-  },
-  {
-    id: 5,
-    name: 'Méthodes Agiles',
-    description: 'Connaissance des principes Agiles pour une gestion de projet efficace et collaborative.',
-    image: '/icon-agile.png',
-  },
-];
+const GET_COMPETENCES = gql`
+  query GetCompetences {
+    competences {
+      id
+      titre
+      description
+      image {
+        url
+      }
+    }
+  }
+`;
 
 const HoverSpring = () => {
+  const { data, loading, error } = useQuery(GET_COMPETENCES);
+
+  if (loading) return <p className="text-white">Chargement...</p>;
+  if (error) return <p className="text-red-500">Erreur : {error.message}</p>;
+
   return (
     <div className="py-10">
       <div className="grid w-full grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-        {Competences.map((competences) => (
+        {data.competences.map((competence: any) => (
           <motion.div
             whileHover={{
               y: -8,
@@ -49,21 +35,21 @@ const HoverSpring = () => {
               type: 'spring',
               bounce: 0.7,
             }}
-            key={competences.id}
+            key={competence.id}
             className="p-4 text-left rounded-lg shadow-md bg-[#2c2c2c] dark:bg-[#1e1e1e]"
           >
             <Image
-              src={competences.image}
+              src={competence.image.url}
               width={30}
               height={30}
               className="mb-3 rounded-lg"
-              alt={competences.name}
+              alt={competence.titre}
             />
             <div className="mb-1 text-lg font-medium text-gray-100 dark:text-gray-100">
-              {competences.name}
+              {competence.titre}
             </div>
             <div className="max-w-[250px] text-sm font-normal text-gray-400 dark:text-gray-400">
-              {competences.description}
+              {competence.description}
             </div>
           </motion.div>
         ))}

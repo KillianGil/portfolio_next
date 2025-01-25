@@ -1,9 +1,4 @@
-import { Tourney } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const tourney = Tourney({
-  subsets: ["latin"],
-});
 
 export default function BoldCopy({
   text = "Contact",
@@ -24,7 +19,6 @@ export default function BoldCopy({
     <div
       className={cn(
         "group relative flex items-center justify-center bg-background px-2 py-2 md:px-6 md:py-4",
-        tourney.className,
         className
       )}
     >

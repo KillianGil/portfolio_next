@@ -5,6 +5,7 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { gql, useQuery } from "@apollo/client";
+import WhirlpoolLoader from "./whirlpool-Loader";
 
 const GET_EXPERIENCES = gql`
   query GetExperiences {
@@ -61,7 +62,9 @@ export function ExpandableCardDemo() {
 
   useOutsideClick(ref, () => setActive(null));
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return <WhirlpoolLoader />;
+  }
   if (error) return <p>Error: {error.message}</p>;
 
   const experiences = data.experiences;
@@ -110,7 +113,7 @@ export function ExpandableCardDemo() {
 
               <div>
                 <div className="flex justify-between items-start p-4">
-                  <div className="max-w-[70%]"> {/* Limite la largeur de la description */}
+                  <div className="max-w-[70%]"> 
                     <motion.h3
                       layoutId={`title-${active.titre}-${id}`}
                       className="font-medium text-white text-base"

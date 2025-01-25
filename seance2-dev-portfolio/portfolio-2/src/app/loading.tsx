@@ -1,8 +1,9 @@
 import React from 'react'
+import WhirlpoolLoader from '@/components/ui/whirlpool-Loader'
 
 const loading = () => {
   return (
-    <div>loading</div>
+    <div><WhirlpoolLoader /></div>
   )
 }
 

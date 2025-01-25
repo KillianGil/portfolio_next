@@ -1,19 +1,25 @@
-import { motion, Variants } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
-import React, { useState } from 'react'
+"use client";
+
+import { gql, useQuery } from "@apollo/client";
+import { motion, Variants } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import React, { useState } from "react";
+import WhirlpoolLoader from "./whirlpool-Loader";
+
+const GET_FAQS = gql`
+  query GetFaqs {
+    faqs {
+      titre
+      contenu
+    }
+  }
+`;
 
 interface AccordionItemProps {
-  title: string
-  content: string
-  isExpanded: boolean
-  onToggle: () => void
-}
-
-interface AccordionProps {
-  items: Array<{
-    title: string
-    content: string
-  }>
+  title: string;
+  content: string;
+  isExpanded: boolean;
+  onToggle: () => void;
 }
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
@@ -24,14 +30,14 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 }) => {
   const cardVariants: Variants = {
     collapsed: {
-      height: '60px',
-      transition: { type: 'spring', stiffness: 300, damping: 15 },
+      height: "60px",
+      transition: { type: "spring", stiffness: 300, damping: 15 },
     },
     expanded: {
-      height: 'auto',
-      transition: { type: 'spring', stiffness: 300, damping: 15 },
+      height: "auto",
+      transition: { type: "spring", stiffness: 300, damping: 15 },
     },
-  }
+  };
 
   const contentVariants: Variants = {
     collapsed: { opacity: 0 },
@@ -39,47 +45,57 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
       opacity: 1,
       transition: { delay: 0.1 },
     },
-  }
+  };
 
   const chevronVariants: Variants = {
     collapsed: { rotate: 0 },
     expanded: { rotate: 180 },
-  }
+  };
 
   return (
     <motion.div
-      className={`w-90 dark:bg-gray-800' my-4 h-full cursor-pointer select-none overflow-hidden rounded-lg border  dark:border-gray-700`}
+      className="w-90 my-4 h-full cursor-pointer select-none overflow-hidden rounded-lg border"
+      style={{ backgroundColor: "#1e1e1e", borderColor: "#2c2c2c" }} 
       variants={cardVariants}
       initial="collapsed"
-      animate={isExpanded ? 'expanded' : 'collapsed'}
+      animate={isExpanded ? "expanded" : "collapsed"}
       onClick={onToggle}
     >
-      <div className="flex items-center justify-between p-4 text-gray-900 dark:text-gray-100">
-        <h2 className="m-0 text-sm font-semibold text-red-500">{title}</h2>
+      <div
+        className="flex items-center justify-between p-4"
+        style={{ color: "#ffffff" }}
+      >
+        <h2 className="m-0 text-sm font-semibold">{title}</h2>
         <motion.div variants={chevronVariants}>
           <ChevronDown size={18} />
         </motion.div>
       </div>
       <motion.div
         className="text-md select-none px-4 py-4"
+        style={{ color: "#ffffff" }} 
         variants={contentVariants}
         initial="collapsed"
-        animate={isExpanded ? 'expanded' : 'collapsed'}
+        animate={isExpanded ? "expanded" : "collapsed"}
       >
-        <p className="m-0 text-sm text-gray-900 dark:text-gray-100">
-          {content}
-        </p>
+        <p className="m-0 text-sm">{content}</p>
       </motion.div>
     </motion.div>
-  )
+  );
+};
+
+interface AccordionProps {
+  items: Array<{
+    title: string;
+    content: string;
+  }>;
 }
 
 const Accordion: React.FC<AccordionProps> = ({ items }) => {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index)
-  }
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
 
   return (
     <div className="space-y-4">
@@ -93,40 +109,34 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-const accordionItems = [
-  {
-    title: 'Explore Knowledge',
-    content:
-      'Discover new worlds of information with our interactive learning platform.',
-  },
-  {
-    title: 'Innovative Learning',
-    content:
-      'Experience cutting-edge educational techniques that adapt to your unique learning style.',
-  },
-  {
-    title: 'Global Community',
-    content:
-      'Connect with learners worldwide and share insights in our vibrant, diverse community.',
-  },
-  {
-    title: 'Personalized Growth',
-    content:
-      'Track your progress and receive tailored recommendations to accelerate your learning journey.',
-  },
-]
+const FaqSection: React.FC = () => {
+  const { data, loading, error } = useQuery(GET_FAQS);
 
-const AccordionExample: React.FC = () => {
+  if (loading) {
+    return <WhirlpoolLoader />;
+  }
+
+  if (error) {
+    return (
+      <p className="text-center" style={{ color: "#ff0000" }}>
+        Erreur : {error.message}
+      </p>
+    );
+  }
+
+  const faqItems = data.faqs.map((faq: any) => ({
+    title: faq.titre,
+    content: faq.contenu,
+  }));
+
   return (
-    <div>
-      <div className="p-8">
-        <Accordion items={accordionItems} />
-      </div>
+    <div className="p-8">
+      <Accordion items={faqItems} />
     </div>
-  )
-}
+  );
+};
 
-export default AccordionExample
+export default FaqSection;

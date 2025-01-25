@@ -1,11 +1,12 @@
 "use client";
 
 import { gql, useQuery } from "@apollo/client";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { perspective } from "@/components/Header/Nav/anim";
 import { cn } from "@/lib/utils";
-import WaveReveal from "./wave-reveal";
 
-interface ImageProps extends HTMLAttributes<HTMLDivElement> {
+interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {
   item: { image: string; title: string };
   index: number;
   activeItem: number;
@@ -47,13 +48,16 @@ const List = ({ item, className, index, activeItem, ...props }: ImageProps) => (
     />
     {index === activeItem && (
       <div className="absolute bottom-4 left-4 min-w-fit text-white md:bottom-8 md:left-8">
-        <WaveReveal
-          duration="100ms"
-          className="items-start justify-start text-xl sm:text-2xl md:text-5xl"
-          text={item.title.replace(/ /g, "\u00A0")}
-          direction="up"
-          extraDelay={2000}
-        />
+        <motion.div
+          custom={index} 
+          variants={perspective} 
+          initial="initial" 
+          animate="enter" 
+          exit="exit" 
+          className="items-start justify-start text-2xl sm:text-2xl md:text-5xl"
+        >
+          {item.title.replace(/ /g, "\u00A0")}
+        </motion.div>
       </div>
     )}
   </div>
@@ -64,10 +68,11 @@ export default function Expandable({ autoPlay = true, className }: ExpandablePro
   const [activeItem, setActiveItem] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
-  const passions = data?.passions?.map((passion: any) => ({
-    image: passion.image.url,
-    title: passion.titre,
-  })) || [];
+  const passions =
+    data?.passions?.map((passion: any) => ({
+      image: passion.image.url,
+      title: passion.titre,
+    })) || [];
 
   useEffect(() => {
     if (!autoPlay || passions.length === 0) {
@@ -83,21 +88,11 @@ export default function Expandable({ autoPlay = true, className }: ExpandablePro
     return () => clearInterval(interval);
   }, [autoPlay, passions, isHovering]);
 
-  if (loading) {
-    return <p>Chargement...</p>;
-  }
-
-  if (error) {
-    return <p>Erreur : {error.message}</p>;
-  }
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p>Erreur : {error.message}</p>;
 
   return (
-    <div
-      className={cn(
-        "flex h-96 max-w-screen-lg mx-auto gap-1", 
-        className
-      )}
-    >
+    <div className={cn("flex h-96 max-w-screen-lg mx-auto gap-1", className)}>
       {passions.map((item: any, index: number) => (
         <List
           key={item.title}
@@ -108,9 +103,7 @@ export default function Expandable({ autoPlay = true, className }: ExpandablePro
             setActiveItem(index);
             setIsHovering(true);
           }}
-          onMouseLeave={() => {
-            setIsHovering(false);
-          }}
+          onMouseLeave={() => setIsHovering(false)}
         />
       ))}
     </div>

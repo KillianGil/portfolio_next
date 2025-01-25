@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from './Button/button';
-import styles from './style.module.scss';
+import styles from '@/style/header.module.scss';
 import Nav from './Nav/nav';
 
 const menuVariants = {
@@ -12,19 +12,30 @@ const menuVariants = {
     height: '650px',
     top: '-25px',
     right: '-25px',
-    transition: { duration: 0.75, type: 'tween', ease: [0.76, 0, 0.24, 1] },
+    transition: {
+      duration: 0.75,
+      type: 'tween',
+      ease: [0.76, 0, 0.24, 1],
+    },
   },
   closed: {
     width: '100px',
     height: '40px',
     top: '0px',
     right: '0px',
-    transition: { duration: 0.75, delay: 0.35, type: 'tween', ease: [0.76, 0, 0.24, 1] },
+    transition: {
+      duration: 0.75,
+      delay: 0.35,
+      type: 'tween',
+      ease: [0.76, 0, 0.24, 1],
+    },
   },
 };
 
-export default function HeaderMenu(): JSX.Element {
-  const [isActive, setIsActive] = useState<boolean>(false);
+export default function HeaderMenu() {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleMenu = () => setIsActive((prev) => !prev);
 
   return (
     <div className={styles.header}>
@@ -34,11 +45,9 @@ export default function HeaderMenu(): JSX.Element {
         animate={isActive ? 'open' : 'closed'}
         initial="closed"
       >
-        <AnimatePresence>
-          {isActive && <Nav />}
-        </AnimatePresence>
+        <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
       </motion.div>
-      <Button isActive={isActive} toggleMenu={() => setIsActive(!isActive)} />
+      <Button isActive={isActive} toggleMenu={toggleMenu} />
     </div>
   );
 }

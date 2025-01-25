@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
+    "@next/font": "^14.2.15",
     "@studio-freight/lenis": "^1.0.42",
     "@tabler/icons-react": "^3.22.0",
     "@tsparticles/engine": "^3.7.1",

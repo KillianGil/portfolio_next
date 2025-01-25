@@ -4,14 +4,11 @@ import Image from 'next/image';
 interface NavigationItem {
   name: string;
   href: string;
-  icon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
-  iconSrc?: string; 
+  icon?: (props: React.SVGProps<SVGSVGElement>) => React.ReactNode;
+  iconSrc?: string;
 }
 
-const navigation: {
-  main: NavigationItem[];
-  social: NavigationItem[];
-} = {
+const navigation = {
   main: [
     { name: 'Accueil', href: '/' },
     { name: 'Projets', href: '/projets' },
@@ -23,12 +20,12 @@ const navigation: {
     {
       name: 'Instagram',
       href: 'https://instagram.com/killian.gil',
-      iconSrc: '/insta-svg.svg', 
+      iconSrc: '/insta-svg.svg',
     },
     {
       name: 'Mail',
       href: 'mailto:killiangil04@gmail.com',
-      iconSrc: '/mail-svg.svg', 
+      iconSrc: '/mail-svg.svg',
     },
     {
       name: 'LinkedIn',
@@ -54,51 +51,67 @@ const navigation: {
 const Footer: React.FC = () => {
   return (
     <footer className="w-full">
-      <div className="mx-auto w-full max-w-6xl px-4">
-        <div className="w-3/5 mx-auto h-[1px] bg-white mb-2" />
-      </div>
+      <Divider />
       <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <nav className="flex flex-wrap justify-center transform scale-105">
-          {navigation.main.map((item) => (
-            <div key={item.name} className="px-5 py-1">
-              <a
-                href={item.href}
-                className="relative text-sm text-white dark:text-gray-100 transition-all duration-200 ease-in-out group"
-              >
-                {item.name}
-                <span className="absolute bottom-[-8px] left-0 w-0 h-[2px] bg-white group-hover:w-full transition-all duration-300 ease-in-out"></span>
-              </a>
-            </div>
-          ))}
-        </nav>
-        <div className="mt-6 flex justify-center space-x-6 transform scale-105">
-          {navigation.social.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-white hover:text-gray-300 dark:text-gray-100 transition-all duration-200 ease-in-out"
-            >
-              <span className="sr-only">{item.name}</span>
-              {item.iconSrc ? (
-                <Image
-                  src={item.iconSrc}
-                  alt={item.name}
-                  width={24}
-                  height={24}
-                  className="h-6 w-6 hover:scale-110 transition-transform duration-200"
-                />
-              ) : (
-                item.icon && <item.icon />
-              )}
-            </a>
-          ))}
-        </div>
-        <p className="mt-8 text-center text-sm text-white dark:text-gray-100 transform scale-105">
-          &copy; {new Date().getFullYear()} Killian Gil. Tous droits réservés.
-        </p>
+        <MainNavigation />
+        <SocialNavigation />
+        <FooterNote />
       </div>
     </footer>
   );
 };
+
+const Divider = () => (
+  <div className="mx-auto w-full max-w-6xl px-4">
+    <div className="w-3/5 mx-auto h-[1px] bg-white mb-2" />
+  </div>
+);
+
+const MainNavigation = () => (
+  <nav className="flex flex-wrap justify-center transform scale-105">
+    {navigation.main.map((item) => (
+      <div key={item.name} className="px-5 py-1">
+        <a
+          href={item.href}
+          className="relative text-sm text-white dark:text-gray-100 transition-all duration-200 ease-in-out group"
+        >
+          {item.name}
+          <span className="absolute bottom-[-8px] left-0 w-0 h-[2px] bg-white group-hover:w-full transition-all duration-300 ease-in-out"></span>
+        </a>
+      </div>
+    ))}
+  </nav>
+);
+
+const SocialNavigation = () => (
+  <div className="mt-6 flex justify-center space-x-6 transform scale-105">
+    {navigation.social.map((item) => (
+      <a
+        key={item.name}
+        href={item.href}
+        className="text-white hover:text-gray-300 dark:text-gray-100 transition-all duration-200 ease-in-out"
+      >
+        <span className="sr-only">{item.name}</span>
+        {item.iconSrc ? (
+          <Image
+            src={item.iconSrc}
+            alt={item.name}
+            width={24}
+            height={24}
+            className="h-6 w-6 hover:scale-110 transition-transform duration-200"
+          />
+        ) : (
+          item.icon && <item.icon />
+        )}
+      </a>
+    ))}
+  </div>
+);
+
+const FooterNote = () => (
+  <p className="mt-8 text-center text-sm text-white dark:text-gray-100 transform scale-105">
+    &copy; {new Date().getFullYear()} Killian Gil. Tous droits réservés.
+  </p>
+);
 
 export default Footer;

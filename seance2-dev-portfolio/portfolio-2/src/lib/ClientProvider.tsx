@@ -1,4 +1,4 @@
-'use client'; // Ce fichier est exclusivement client-side
+'use client'; 
 
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
